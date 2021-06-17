@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Blockbuster
 {
-    public class Movie
+    public class Movies
     {
         public string Title { get; set; }
         public Genre Category { get; set; }
@@ -13,13 +13,13 @@ namespace Blockbuster
 
         public IPlay MovieType {get; set;}
        
-        public Movie(string Title, Genre Category, int Runtime, List<string> Scenes, IPlay MovieType)
+        public Movies(string Title, Genre Category, int Runtime, List<string> Scenes, IPlay MovieType)
         {
             this.Title = Title;
             this.Category = Category;
             this.Runtime = Runtime;
             this.Scenes = Scenes;
-            this.MovieType = films;
+            this.MovieType = MovieType;
         }
  
         public void PrintInfo()
@@ -37,8 +37,9 @@ namespace Blockbuster
                 Console.WriteLine(scene);
             }
         }
-        public void Play()
+        public void Play(List<string> Scenes)
         {
+            MovieType.Play(Scenes);
 
         }
 

@@ -7,52 +7,71 @@ namespace Blockbuster
     //Always make classes, properties public unless to do otherwise
     public class VHS : IPlay
     {
+        private string v1;
+        private Genre action;
+        private int v2;
+        private List<string> dieHardScenes;
+
+        public VHS()
+        {
+        }
+
+        public VHS(string v1, Genre action, int v2, List<string> dieHardScenes)
+        {
+            this.v1 = v1;
+            this.action = action;
+            this.v2 = v2;
+            this.dieHardScenes = dieHardScenes;
+        }
+
         //We want current time to always start at 0
         //You may give properties initial values 
-        public int CurrentTime { get; set; } = 0;
+        
 
         //Base - reference to the parent class 
         //If the parent has parameters in its constructor, 
         //The child must call base in it's own constructor to pass values up to the parent 
         //Outside of Constructors, base functions much like the this keyword, 
         //but instead of pointing to itself, it point to its immediate parent
-        public VHS(string Title, Genre Category, int Runtime, List<string> Scenes) 
-        {
 
+
+        //VHS wants it own version of the play method 
+        public int CurrentTime { get; set; } = 0;
+        public void Play(List<string> Scenes)
+            {
+             string userAnswer = "YES";
+            while (userAnswer == "YES")
+            {
+                if (CurrentTime < Scenes.Count)
+                {
+                    string scene = Scenes[CurrentTime];
+                    Console.WriteLine($"Time ({CurrentTime}) : {scene}");
+                    CurrentTime++;
+                    Console.Write("\nWould you like to play next scene? Y/N");
+                    string input = Console.ReadLine();
+
+                    if (input.ToUpper() == "Y" || input.ToUpper() == "YES")
+                    {
+                        userAnswer = "YES";
+                    }
+                    else if (input.ToUpper() == "N" || input.ToUpper() == "NO")
+                    {
+                        userAnswer = "NO";
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("The movie has ended");
+                    Rewind();
+                    userAnswer = "NO";
+                }
+            }
         }
 
         public void Rewind()
         {
             CurrentTime = 0;
-        }
 
-
-        //VHS wants it own version of the play method 
-        public void Play(List<string> Scenes)
-            {
-            List<string> dieHardScenes = new List<string>() { "Plane scene", "Snape takes over the building", "John McLane sneaks around", "Shoot out by the vault" };
-            VHS v = new VHS("Die Hard", Genre.Action, 120, dieHardScenes);
-
-            List<string> lordOfTheRingsScenes = new List<string>() { "Hobbiton", "Fireworks", "Mines of Moria", "Orcs attack" };
-            VHS v2 = new VHS("Fellowship of the Ring", Genre.Drama, 225, lordOfTheRingsScenes);
-
-            if (CurrentTime < Scenes.Count)
-            {
-                string scene = Scenes[CurrentTime];
-                Console.WriteLine(scene);
-                CurrentTime++;
-            }
-            else
-            {
-                Rewind();
-            }
-
-        }
-
-        public Movie GetMovie(int index)
-        {
-            Movie m = Movies[index];
-            return m;
         }
     }
 }

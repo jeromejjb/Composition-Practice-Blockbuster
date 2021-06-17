@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Blockbuster
 {
-    interface IPlay
+    public interface IPlay
     {
         public void Play(List<string> Scenes);
     }
